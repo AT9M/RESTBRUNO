@@ -9,8 +9,6 @@ import lombok.experimental.SuperBuilder;
 import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.List;
 
 /**

@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -48,13 +47,13 @@ public class Animal implements SimpleEntity {
 
 
     private String name;
-
+/*
     private Boolean isDead = false;
-
+*/
     @ManyToOne
     private Zoo zoo;
 
-
+/*
     public Boolean Tue(Personne p){
         if(!p.getIsDead()){
             p.setIsDead(true);
@@ -62,7 +61,7 @@ public class Animal implements SimpleEntity {
         }
         return false;
     }
-
+*/
 
     //////////////////////////////////////////////////
     /**
@@ -80,13 +79,12 @@ public class Animal implements SimpleEntity {
         this.zoo = manyToOne;
     }
 
-    public static Animal FindAnimal(long id){
+    public static List<Animal> FindAnimal(){
         EntityManagerFactory emf = Persistence
                 .createEntityManagerFactory("test");
         EntityManager em = emf.createEntityManager();
-        Query query = em.createNamedQuery("animal.FindAnimal");
-        query.setParameter("id",id);
-        return (Animal) query.getSingleResult();
+        Query query = em.createNamedQuery("animal.AllAninmal");
+        return  query.getResultList();
     }
 
     /**
