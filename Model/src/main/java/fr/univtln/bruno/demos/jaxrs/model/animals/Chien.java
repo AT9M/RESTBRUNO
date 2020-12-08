@@ -9,8 +9,6 @@ import lombok.experimental.SuperBuilder;
 import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -40,18 +38,6 @@ public class Chien extends Animal {
     private List<Pathologie> Pathos;
 
 
-    /**
-     * Supprime tous les chiens portant le nom name:de la base de données
-     * @param name le nom des des chiens à supprimer de la base de données
-     */
-    public static void DELETE(String name){
-        EntityManagerFactory emf = Persistence
-                .createEntityManagerFactory("test");
-        EntityManager em = emf.createEntityManager();
-        Query query = em.createNamedQuery("chien.DELETE");
-        query.setParameter("name",name);
-        List<Chien> CHIEN = (List<Chien>) query.getResultList();
-        for (Chien chien:CHIEN) { em.remove(chien); }
-    }
+
 
 }

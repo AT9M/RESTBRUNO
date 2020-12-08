@@ -1,6 +1,8 @@
 package fr.univtln.bruno.demos.jaxrs.model;
 
+import fr.univtln.bruno.demos.jaxrs.model.animals.Aigle;
 import fr.univtln.bruno.demos.jaxrs.model.animals.Animal;
+import fr.univtln.bruno.demos.jaxrs.model.animals.Chien;
 import fr.univtln.bruno.demos.jaxrs.model.dao.AnimalDAO;
 import fr.univtln.bruno.demos.jaxrs.model.dao.HumainDAO;
 import fr.univtln.bruno.demos.jaxrs.model.dao.StructureDAO;
@@ -19,28 +21,17 @@ import java.util.Properties;
 
 public class ZooManager {
     public static Properties properties = new Properties();
+    private static Zoo zoo;
 
     static {
         properties.setProperty("test", "test");
-    }
 
-    private static final Zoo zoo=Zoo.builder().name("Faron").build();
-    private static final ZooKeeper zookeeper =ZooKeeper.builder().id(1).nom("John DOE").build();
-    public void init() {
+        Zoo zoo1=Zoo.builder().name("Faron").build();
+        zoo =zoo1;
+        ZooKeeper zookeeper =ZooKeeper.builder().nom("John DOE").isDead(false).build();
+        Aigle animal =Aigle.builder().name("eeeee").zoo(zoo1).build();
 
-        try (StructureDAO structureDAO = StructureDAO.of()) {
 
-            EntityTransaction transaction = structureDAO.getTransaction();
-
-            transaction.begin();
-
-            structureDAO.persist(zoo);
-
-            transaction.commit();
-
-        }catch (DataPersistException dataPersistException){
-            System.out.println(dataPersistException.getMessage());
-        }
         try (HumainDAO humainDAO = HumainDAO.of()) {
 
             EntityTransaction transaction = humainDAO.getTransaction();
@@ -55,24 +46,67 @@ public class ZooManager {
         }catch (DataPersistException dataPersistException){
             System.out.println(dataPersistException.getMessage());
         }
+        try (StructureDAO structureDAO = StructureDAO.of()) {
+
+            EntityTransaction transaction = structureDAO.getTransaction();
+
+            transaction.begin();
+
+            structureDAO.persist(zoo1);
+
+            transaction.commit();
+
+        }catch (DataPersistException dataPersistException){
+            System.out.println(dataPersistException.getMessage());
+        }
+      try (AnimalDAO animalDAO = AnimalDAO.of()) {
+
+            EntityTransaction transaction = animalDAO.getTransaction();
+
+            transaction.begin();
+
+            animalDAO.persist(animal);
+
+
+            transaction.commit();
+
+        }catch (DataPersistException dataPersistException){
+          System.out.println(dataPersistException.getMessage());
+      }
     }
+
+
+
 
     public ZooManager() {
     }
-    public static List<Animal> findALLAnimal(){
-        return Animal.FindAnimalInzoo(zoo);
+    public Zoo getZoo(long id){
+        return StructureDAO.of().find(id);
+    }
+    public Animal getAnimal(long id){
+        return AnimalDAO.of().find(id);
+    }
+    public static List<Zoo> findALLZoo(){
+        return Zoo.FindAllZoo();
     }
 
-    public void AjouterAnimal(String name){
-        Animal animal = Animal.builder().name(name).zoo(zoo).build();
-        AjoutAnimalDB(animal);
+    public static List<Animal> findALLAnimal(){
+        return  Animal.FindAnimal();
     }
-    public void AjouterZooKeeper(String name){
-        ZooKeeper zooKeeper = ZooKeeper.builder().nom(name).build();
+
+    public void AjouterAigle(Aigle aigle){
+
+        AjoutAnimalDB(aigle);
+    }
+    public  void AjouterChien(String name){
+
+        AjoutAnimalDB(Chien.builder().name(name).build());
+    }
+    public void AjouterZooKeeper(ZooKeeper zooKeeper){
         AjoutPersonDB(zooKeeper);
     }
 
-    public void AjoutAnimalDB(Animal x){
+    public  void AjoutAnimalDB(Animal x){
         try (AnimalDAO animalDAO = AnimalDAO.of()) {
 
             EntityTransaction transaction = animalDAO.getTransaction();
@@ -88,7 +122,7 @@ public class ZooManager {
         }
     }
 
-    public void AjoutPersonDB(Personne x){
+    public  void AjoutPersonDB(Personne x){
         try (HumainDAO humainDAO = HumainDAO.of()) {
 
             EntityTransaction transaction = humainDAO.getTransaction();

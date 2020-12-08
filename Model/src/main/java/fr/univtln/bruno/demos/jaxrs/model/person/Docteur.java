@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -33,7 +31,7 @@ public class Docteur extends Personne {
 
 
 
-    @ManyToMany
+ /*   @ManyToMany
     private List<Zoo> manyToMany;
 
     public List<Zoo> getManyToMany() {
@@ -42,5 +40,5 @@ public class Docteur extends Personne {
 
     public void setManyToMany(List<Zoo> manyToMany) {
         this.manyToMany = manyToMany;
-    }
+    }*/
 }

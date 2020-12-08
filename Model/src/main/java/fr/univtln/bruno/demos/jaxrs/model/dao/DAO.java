@@ -2,10 +2,10 @@ package fr.univtln.bruno.demos.jaxrs.model.dao;
 
 import fr.univtln.bruno.demos.jaxrs.model.entity.SimpleEntity;
 import fr.univtln.bruno.demos.jaxrs.model.exception.DataPersistException;
+import jakarta.validation.ConstraintViolationException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.validation.ConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

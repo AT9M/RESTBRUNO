@@ -1,0 +1,15 @@
+{
+  "id": 9,
+  "name": "TEST",
+  "zoo": {
+    "ZOOKeeper": [],
+    "id": 1,
+    "manyToMany": [],
+    "name": "Faron"
+  },
+  "age": 0,
+  "pathos": []
+}
+
+
+
